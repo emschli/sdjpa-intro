@@ -25,4 +25,5 @@ class SdjpaIntroApplicationTests {
     void contextLoads() {
     }
 
+
 }

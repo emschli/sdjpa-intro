@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Commit;
@@ -19,8 +20,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //brauchen wird damit unten @Order(n) funktioniert
 @DataJpaTest // lädt nur die nötigsten Sachen -> der Datainitializer wird nicht automatisch ausgeführt!
             // Wir starten mit einer leeren H2
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ComponentScan(basePackages = {"guru.springframework.sdjpaintro.bootstrap"}) //holt sich zusätzlich beans dazu!
-public class SpringBootJpaTestSlice {
+public class SpringBootJpaTestClass3Slice {
 
     @Autowired
     BookRepository bookRepository;
@@ -32,7 +34,7 @@ public class SpringBootJpaTestSlice {
         long countBefore = bookRepository.count();
         assertThat(countBefore).isEqualTo(2);
 
-        bookRepository.save(new Book("My Book", "1235555", "Self"));
+        bookRepository.save(new Book("My Book", "1235555", "Self", null));
 
         long countAfter = bookRepository.count();
 
